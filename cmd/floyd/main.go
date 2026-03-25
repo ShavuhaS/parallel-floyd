@@ -45,7 +45,7 @@ func main() {
 	}
 
 	if cfg.outputFile != nil {
-		err := utils.SaveOutputToFile(dist, *cfg.outputFile)
+		err := utils.SaveDistToFile(dist, *cfg.outputFile)
 		if err != nil {
 			log.Fatalf("error: %v\n", err)
 		}
