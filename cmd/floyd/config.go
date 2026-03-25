@@ -22,12 +22,13 @@ const (
 )
 
 type FloydConfig struct {
-	data         [][]float64
-	algorithm    Algorithm
-	inputFile    *string
-	outputFile   *string
-	routineCount int
-	maxProcs     int
+	data           [][]float64
+	algorithm      Algorithm
+	inputFile      *string
+	outputDistFile *string
+	outputPrevFile *string
+	routineCount   int
+	maxProcs       int
 }
 
 func (cfg *FloydConfig) Print() {
@@ -35,8 +36,11 @@ func (cfg *FloydConfig) Print() {
 	if cfg.inputFile != nil {
 		fmt.Println("Input file:", *cfg.inputFile)
 	}
-	if cfg.outputFile != nil {
-		fmt.Println("Output file:", *cfg.outputFile)
+	if cfg.outputDistFile != nil {
+		fmt.Printf("Output (dist) file (len = %v): %v\n", len(*cfg.outputDistFile), *cfg.outputDistFile)
+	}
+	if cfg.outputPrevFile != nil {
+		fmt.Printf("Output (prev) file (len = %v): %v\n", len(*cfg.outputPrevFile), *cfg.outputPrevFile)
 	}
 }
 
@@ -47,7 +51,7 @@ func parseConfig() *FloydConfig {
 
 	input := flag.String("input", "none", "File .txt from which to read the input (to which to write the input).")
 	saveInput := flag.Bool("save-input", false, "Whether to save the input to a file.")
-	output := flag.String("output", "none", "File (or dir) to which to save the output.")
+	output := flag.String("output", "none", "File name prefix (or dir) to which to save the output (dist and prev matrices)")
 	saveOutput := flag.Bool("save-output", false, "Whether to save the output to a file.")
 
 	vertexCount := flag.Int("v", -1, "The number of vertices in a generated graph.")
@@ -66,7 +70,7 @@ func parseConfig() *FloydConfig {
 		fmt.Fprintf(os.Stderr, "I/O options:\n")
 		fmt.Fprintf(os.Stderr, "\t-input string\n\t\tFile .txt or dir to which to write the input (with --save-input).\n\t\tFile .txt from which to read the input (without --save-input). The first line contains a single number \"n\" \n\t\tdenoting the number of vertices. Then it's followed by csv lines of the resulting matrix.\n\t\tAbsent edges should be denoted as \"-\". (default \"none\")\n")
 		fmt.Fprintf(os.Stderr, "\t-save-input\n\t\tWhether to save the input to a file. (default false)\n")
-		fmt.Fprintf(os.Stderr, "\t-output string\n\t\tFile (or dir) to which to save the output. (default \"none\")\n")
+		fmt.Fprintf(os.Stderr, "\t-output string\n\t\tFile name prefix (or dir) to which to save the output (dist and prev matrices). (default \"none\")\n")
 		fmt.Fprintf(os.Stderr, "\t-save-output\n\t\tWhether to save the output to a file. (default false)\n\n")
 
 		fmt.Fprintf(os.Stderr, "Matrix generation options:\n")
@@ -155,6 +159,8 @@ func parseConfig() *FloydConfig {
 
 	cfg.inputFile = input
 
+	var outputPrevFile, outputDistFile string
+
 	if *saveOutput || output != nil {
 		var inputFilePath string
 		if input == nil {
@@ -168,20 +174,24 @@ func parseConfig() *FloydConfig {
 		}
 
 		if output == nil {
-			outputFile := generateOutputFileName(inputFilePath, *algo)
-			output = &outputFile
+			outputDistFile = generateOutputFileName(inputFilePath, *algo, "dist")
+			outputPrevFile = generateOutputFileName(inputFilePath, *algo, "prev")
+			fmt.Println()
 		} else if isDir, err := utils.IsDir(*output); err != nil || isDir {
 			if err != nil {
 				log.Fatalln(err)
 			}
 			inputPath := fmt.Sprintf("%v/%v", *output, filepath.Base(inputFilePath))
-			outputFile := generateOutputFileName(inputPath, *algo)
-			output = &outputFile
+			outputDistFile = generateOutputFileName(inputPath, *algo, "dist")
+			outputPrevFile = generateOutputFileName(inputPath, *algo, "prev")
+		} else {
+			outputDistFile = generateOutputFileName(*output, *algo, "dist")
+			outputPrevFile = generateOutputFileName(*output, *algo, "prev")
 		}
-
 	}
 
-	cfg.outputFile = output
+	cfg.outputDistFile = &outputDistFile
+	cfg.outputPrevFile = &outputPrevFile
 
 	cfg.routineCount = *routineCount
 	cfg.maxProcs = *maxProcs
@@ -202,8 +212,8 @@ func generateInputFileName(n int) string {
 	return fmt.Sprintf("input_%vv_%v.txt", n, time.Now().UnixMilli())
 }
 
-func generateOutputFileName(inputFileName string, algo string) string {
+func generateOutputFileName(inputFileName string, algo string, suffix string) string {
 	ext := filepath.Ext(inputFileName)
 	nameWithoutExt := inputFileName[:len(inputFileName)-len(ext)]
-	return fmt.Sprintf("%v.%v.out%v", nameWithoutExt, algo, ext)
+	return fmt.Sprintf("%v.%v.%v.txt", nameWithoutExt, algo, suffix)
 }

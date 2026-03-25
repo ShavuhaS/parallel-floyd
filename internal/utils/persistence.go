@@ -157,6 +157,8 @@ func SavePrevToFile(prevMat [][]int, filePath string) error {
 		for j := 0; j < n; j++ {
 			if prev[i][j] == -1 {
 				prev[i][j] = math.MaxInt
+			} else {
+				prev[i][j] = prevMat[i][j]
 			}
 		}
 	}

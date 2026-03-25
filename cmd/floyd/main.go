@@ -20,7 +20,7 @@ func main() {
 		log.Fatalln("Unknown algorithm type! Use --help to list available algorithms")
 	}
 
-	if cfg.outputFile == nil {
+	if cfg.outputDistFile == nil {
 		fmt.Println("Results:")
 		fmt.Println()
 		for u := 0; u < len(cfg.data); u++ {
@@ -44,11 +44,19 @@ func main() {
 		fmt.Println("Input successfuly saved to", *cfg.inputFile)
 	}
 
-	if cfg.outputFile != nil {
-		err := utils.SaveDistToFile(dist, *cfg.outputFile)
+	if cfg.outputDistFile != nil {
+		err := utils.SaveDistToFile(dist, *cfg.outputDistFile)
 		if err != nil {
 			log.Fatalf("error: %v\n", err)
 		}
-		fmt.Println("Output successfuly saved to", *cfg.outputFile)
+		fmt.Println("Output (dist) successfuly saved to", *cfg.outputDistFile)
+	}
+
+	if cfg.outputPrevFile != nil {
+		err := utils.SavePrevToFile(prev, *cfg.outputPrevFile)
+		if err != nil {
+			log.Fatalf("error: %v\n", err)
+		}
+		fmt.Println("Output (prev) successfuly saved to", *cfg.outputPrevFile)
 	}
 }
