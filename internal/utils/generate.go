@@ -1,20 +1,23 @@
 package utils
 
-import "math/rand/v2"
+import (
+	"math"
+	"math/rand/v2"
+)
 
-func GenerateMatrix(n, minEdge, maxEdge int, edgeProbability float64) [][]int {
+func GenerateMatrix(n int, minEdge, maxEdge, edgeProbability float64) [][]float64 {
 	edgeRange := maxEdge - minEdge
-	res := make([][]int, n)
+	res := make([][]float64, n)
 
 	for i := 0; i < n; i++ {
-		res[i] = make([]int, n)
+		res[i] = make([]float64, n)
 		for j := 0; j < n; j++ {
 			if i == j {
 				res[i][j] = 0
 				continue
 			}
 			if rand.Float64() < edgeProbability {
-				res[i][j] = minEdge + rand.Int()%(edgeRange+1)
+				res[i][j] = math.Ceil(minEdge + rand.Float64()*edgeRange)
 			} else {
 				res[i][j] = INF
 			}

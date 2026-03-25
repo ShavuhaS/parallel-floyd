@@ -11,21 +11,44 @@ import (
 func main() {
 	cfg := parseConfig()
 
-	var res [][]int
+	var dist [][]float64
+	var prev [][]int
 	switch cfg.algorithm {
 	case Sequential:
-		res = floyd.SequentialSP(cfg.data)
+		dist, prev = floyd.SequentialSPWithPath(cfg.data)
 	default:
 		log.Fatalln("Unknown algorithm type! Use --help to list available algorithms")
 	}
 
-	if cfg.saveOutput {
-		err := utils.SaveToFile(res, cfg.outputFile)
+	if cfg.outputFile == nil {
+		fmt.Println("Results:")
+		fmt.Println()
+		for u := 0; u < len(cfg.data); u++ {
+			for v := 0; v < len(cfg.data); v++ {
+				path := floyd.GetShortestPath(prev, u, v)
+				if len(path) == 0 {
+					fmt.Printf("Path from %v to %v: no path (INF)\n", u, v)
+				} else {
+					fmt.Println(utils.GetPathString(cfg.data, path, dist[u][v]))
+				}
+			}
+		}
+		fmt.Println()
+	}
+
+	if cfg.inputFile != nil {
+		err := utils.SaveInputToFile(cfg.data, *cfg.inputFile)
 		if err != nil {
 			log.Fatalf("error: %v\n", err)
 		}
-	} else {
-		fmt.Println("Result:")
-		fmt.Println(utils.GetMatrixString(res, floyd.INF))
+		fmt.Println("Input successfuly saved to", *cfg.inputFile)
+	}
+
+	if cfg.outputFile != nil {
+		err := utils.SaveOutputToFile(dist, *cfg.outputFile)
+		if err != nil {
+			log.Fatalf("error: %v\n", err)
+		}
+		fmt.Println("Output successfuly saved to", *cfg.outputFile)
 	}
 }
