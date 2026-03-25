@@ -13,41 +13,6 @@ import (
 
 const INF = math.MaxFloat64
 
-func SaveOutputToFile(mat [][]float64, filePath string) error {
-	file, err := os.Create(filePath)
-	if err != nil {
-		return err
-	}
-	defer file.Close()
-
-	w := csv.NewWriter(file)
-
-	return SaveOutputToCsv(mat, w)
-}
-
-func SaveOutputToCsv(mat [][]float64, w *csv.Writer) error {
-	n := len(mat)
-	row := make([]string, n)
-
-	for i := 0; i < n; i++ {
-		for j := 0; j < n; j++ {
-			if mat[i][j] == INF {
-				row[j] = "-"
-			} else {
-				row[j] = fmt.Sprintf("%v", mat[i][j])
-			}
-		}
-		err := w.Write(row)
-		if err != nil {
-			return err
-		}
-	}
-
-	w.Flush()
-
-	return nil
-}
-
 func InputFromFile(filePath string) ([][]float64, error) {
 	var input [][]float64
 
@@ -126,6 +91,45 @@ func SaveInputToFile(adjMat [][]float64, filePath string) error {
 	w.Write([]string{fmt.Sprint(n)})
 
 	return SaveOutputToCsv(adjMat, w)
+}
+
+func SaveOutputToFile(mat [][]float64, filePath string) error {
+	file, err := os.Create(filePath)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	w := csv.NewWriter(file)
+
+	return SaveOutputToCsv(mat, w)
+}
+
+func SaveOutputToCsv(mat [][]float64, w *csv.Writer) error {
+	n := len(mat)
+	row := make([]string, n)
+
+	for i := 0; i < n; i++ {
+		for j := 0; j < n; j++ {
+			if mat[i][j] == INF {
+				row[j] = "-"
+			} else {
+				row[j] = fmt.Sprintf("%v", mat[i][j])
+			}
+		}
+		err := w.Write(row)
+		if err != nil {
+			return err
+		}
+	}
+
+	w.Flush()
+
+	return nil
+}
+
+func OutputFromFile(filePath string) ([][]float64, error) {
+	return InputFromFile(filePath)
 }
 
 func ReadInputFromConsole() [][]float64 {
