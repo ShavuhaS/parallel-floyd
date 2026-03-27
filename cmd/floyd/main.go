@@ -20,8 +20,8 @@ func main() {
 		dist, prev = floyd.ParallelRowedSPWithPath(cfg.data, cfg.routineCount)
 	case ParallelBlocked:
 		dist, prev = floyd.ParallelBlockedSPWithPath(cfg.data, cfg.routineCount)
-	case ParallelCached:
-		dist, prev = floyd.ParallelCachedSPWithPath(cfg.data, cfg.routineCount)
+	case ParallelPhaseBlocked:
+		dist, prev = floyd.ParallelPhaseBlockedSPWithPath(cfg.data, cfg.routineCount)
 	default:
 		log.Fatalln("Unknown algorithm type! Use --help to list available algorithms")
 	}
