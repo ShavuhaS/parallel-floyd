@@ -110,6 +110,7 @@ func MatrixToCsv[T comparable](w *csv.Writer, mat [][]T, noValue T) error {
 			}
 		}
 		err := w.Write(row)
+		w.Flush()
 		if err != nil {
 			return err
 		}

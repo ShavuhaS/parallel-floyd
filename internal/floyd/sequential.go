@@ -2,17 +2,13 @@ package floyd
 
 import (
 	"math"
-	"slices"
 )
 
 const INF = math.MaxFloat64
 
 func SequentialSP(adjMat [][]float64) [][]float64 {
 	n := len(adjMat)
-	dist := make([][]float64, n)
-	for i := 0; i < n; i++ {
-		dist[i] = slices.Clone(adjMat[i])
-	}
+	dist := InitDist(adjMat)
 
 	for k := 0; k < n; k++ {
 		for i := 0; i < n; i++ {
@@ -32,23 +28,7 @@ func SequentialSP(adjMat [][]float64) [][]float64 {
 
 func SequentialSPWithPath(adjMat [][]float64) ([][]float64, [][]int) {
 	n := len(adjMat)
-	dist := make([][]float64, n)
-	prev := make([][]int, n)
-	for i := 0; i < n; i++ {
-		dist[i] = slices.Clone(adjMat[i])
-		prev[i] = make([]int, n)
-		for j := 0; j < n; j++ {
-			if i == j {
-				prev[i][i] = i
-				continue
-			}
-			if dist[i][j] != INF {
-				prev[i][j] = i
-			} else {
-				prev[i][j] = -1
-			}
-		}
-	}
+	dist, prev := InitDistAndPrev(adjMat)
 
 	for k := 0; k < n; k++ {
 		for i := 0; i < n; i++ {

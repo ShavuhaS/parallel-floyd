@@ -1,2 +1,7 @@
 .vscode/
 bin/
+testcase_5000v.*.txt
+testcase_10000v.*.txt
+testcase_15000v.*.txt
+testcase_17500v.*.txt
+testcase_20000v.*.txt

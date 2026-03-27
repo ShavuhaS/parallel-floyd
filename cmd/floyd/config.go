@@ -19,6 +19,7 @@ const (
 	Sequential Algorithm = iota
 	ParallelRowed
 	ParallelBlocked
+	ParallelCached
 )
 
 type FloydConfig struct {
@@ -63,7 +64,7 @@ func parseConfig() *FloydConfig {
 		fmt.Fprintf(os.Stderr, "Usage of %s:\n\n", filepath.Base(os.Args[0]))
 
 		fmt.Fprintf(os.Stderr, "Algorithm specific options:\n")
-		fmt.Fprintf(os.Stderr, "\t-algorithm string\n\t\tAlgorithm to use.\n\t\tAvailable options: sequential, parallel-rowed, parallel-blocked. (default \"sequential\")\n")
+		fmt.Fprintf(os.Stderr, "\t-algorithm string\n\t\tAlgorithm to use.\n\t\tAvailable options: sequential, parallel-rowed, parallel-blocked, parallel-cached. (default \"sequential\")\n")
 		fmt.Fprintf(os.Stderr, "\t-routines int\n\t\tThe amount of goroutines to use. Defaults to the number of CPUs. (default %d)\n", runtime.NumCPU())
 		fmt.Fprintf(os.Stderr, "\t-max-procs int\n\t\tThe value of GOMAXPROCS env variable. Defaults to the number of CPUs. (default %d)\n\n", runtime.NumCPU())
 
@@ -82,7 +83,7 @@ func parseConfig() *FloydConfig {
 
 	flag.Parse()
 
-	log.Default().SetFlags(0)
+	log.Default().SetFlags(log.Lshortfile)
 
 	var cfg FloydConfig
 
@@ -93,6 +94,8 @@ func parseConfig() *FloydConfig {
 		cfg.algorithm = ParallelRowed
 	case "parallel-blocked":
 		cfg.algorithm = ParallelBlocked
+	case "parallel-cached":
+		cfg.algorithm = ParallelCached
 	default:
 		log.Fatalln("error: Unknown algorithm! See --help for available options")
 	}
@@ -190,8 +193,12 @@ func parseConfig() *FloydConfig {
 		}
 	}
 
-	cfg.outputDistFile = &outputDistFile
-	cfg.outputPrevFile = &outputPrevFile
+	if outputDistFile != "" {
+		cfg.outputDistFile = &outputDistFile
+	}
+	if outputPrevFile != "" {
+		cfg.outputPrevFile = &outputPrevFile
+	}
 
 	cfg.routineCount = *routineCount
 	cfg.maxProcs = *maxProcs

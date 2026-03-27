@@ -8,6 +8,6 @@ func TestSequentialSP(t *testing.T) {
 	fileTestFloyd(t, SequentialSP)
 }
 
-func TestFloydWarshallWithPath(t *testing.T) {
+func TestSequentialSPWithPath(t *testing.T) {
 	fileTestFloydWithPath(t, SequentialSPWithPath)
 }

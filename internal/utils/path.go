@@ -1,16 +1,19 @@
 package utils
 
-import (
-	"os"
-)
+import "slices"
 
-func IsDir(path string) (bool, error) {
-	info, err := os.Stat(path)
-	if os.IsNotExist(err) {
-		return false, nil
+func GetShortestPath(prev [][]int, u, v int) []int {
+	path := []int{}
+	for v != u {
+		path = append(path, v)
+		v = prev[u][v]
+		if v == -1 {
+			return []int{}
+		}
 	}
-	if err != nil {
-		return false, err
-	}
-	return info.IsDir(), nil
+	path = append(path, u)
+
+	slices.Reverse(path)
+
+	return path
 }

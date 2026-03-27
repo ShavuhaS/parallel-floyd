@@ -16,16 +16,22 @@ func main() {
 	switch cfg.algorithm {
 	case Sequential:
 		dist, prev = floyd.SequentialSPWithPath(cfg.data)
+	case ParallelRowed:
+		dist, prev = floyd.ParallelRowedSPWithPath(cfg.data, cfg.routineCount)
+	case ParallelBlocked:
+		dist, prev = floyd.ParallelBlockedSPWithPath(cfg.data, cfg.routineCount)
+	case ParallelCached:
+		dist, prev = floyd.ParallelCachedSPWithPath(cfg.data, cfg.routineCount)
 	default:
 		log.Fatalln("Unknown algorithm type! Use --help to list available algorithms")
 	}
 
-	if cfg.outputDistFile == nil {
+	if cfg.outputDistFile == nil || cfg.outputPrevFile == nil {
 		fmt.Println("Results:")
 		fmt.Println()
 		for u := 0; u < len(cfg.data); u++ {
 			for v := 0; v < len(cfg.data); v++ {
-				path := floyd.GetShortestPath(prev, u, v)
+				path := utils.GetShortestPath(prev, u, v)
 				if len(path) == 0 {
 					fmt.Printf("Path from %v to %v: no path (INF)\n", u, v)
 				} else {
