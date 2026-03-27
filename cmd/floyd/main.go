@@ -38,6 +38,7 @@ func main() {
 					fmt.Println(utils.GetPathString(cfg.data, path, dist[u][v]))
 				}
 			}
+			fmt.Println()
 		}
 		fmt.Println()
 	}

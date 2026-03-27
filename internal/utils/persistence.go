@@ -95,7 +95,7 @@ func MatrixFromFile[T comparable](filePath string, parseCsv func(*csv.Reader) ([
 	return parseCsv(r)
 }
 
-func MatrixToCsv[T comparable](w *csv.Writer, mat [][]T, noValue T) error {
+func MatrixToCsv[T comparable](w *csv.Writer, mat [][]T, getStringValue func(T) string) error {
 	n := len(mat)
 	row := make([]string, n)
 
@@ -103,15 +103,9 @@ func MatrixToCsv[T comparable](w *csv.Writer, mat [][]T, noValue T) error {
 
 	for i := 0; i < n; i++ {
 		for j := 0; j < n; j++ {
-			if mat[i][j] == noValue {
-				row[j] = "-"
-			} else {
-				row[j] = fmt.Sprintf("%v", mat[i][j])
-			}
+			row[j] = getStringValue(mat[i][j])
 		}
-		err := w.Write(row)
-		w.Flush()
-		if err != nil {
+		if err := w.Write(row); err != nil {
 			return err
 		}
 	}
@@ -133,38 +127,42 @@ func MatrixToFile[T comparable](filePath string, mat [][]T, writeCsv func(*csv.W
 	return writeCsv(w, mat)
 }
 
-func Float64MatrixToCsv(w *csv.Writer, mat [][]float64) error {
-	return MatrixToCsv(w, mat, INF)
+func Float64MatrixToCsv(w *csv.Writer, mat [][]float64, noValue float64) error {
+	return MatrixToCsv(w, mat, func(val float64) string {
+		if val == noValue {
+			return "-"
+		} else {
+			return strconv.FormatFloat(val, 'f', -1, 64)
+		}
+	})
 }
 
-func IntMatrixToCsv(w *csv.Writer, mat [][]int) error {
-	return MatrixToCsv(w, mat, math.MaxInt)
+func IntMatrixToCsv(w *csv.Writer, mat [][]int, noValue int) error {
+	return MatrixToCsv(w, mat, func(val int) string {
+		if val == noValue {
+			return "-"
+		} else {
+			return strconv.FormatInt(int64(val), 10)
+		}
+	})
 }
 
 func SaveInputToFile(adjMat [][]float64, filePath string) error {
-	return MatrixToFile(filePath, adjMat, Float64MatrixToCsv)
+	return MatrixToFile(filePath, adjMat, func(w *csv.Writer, mat [][]float64) error {
+		return Float64MatrixToCsv(w, mat, INF)
+	})
 }
 
 func SaveDistToFile(distMat [][]float64, filePath string) error {
-	return MatrixToFile(filePath, distMat, Float64MatrixToCsv)
+	return MatrixToFile(filePath, distMat, func(w *csv.Writer, mat [][]float64) error {
+		return Float64MatrixToCsv(w, mat, INF)
+	})
 }
 
-func SavePrevToFile(prevMat [][]int, filePath string) error {
-	n := len(prevMat)
-
-	prev := make([][]int, n)
-	for i := 0; i < n; i++ {
-		prev[i] = make([]int, n)
-		for j := 0; j < n; j++ {
-			if prev[i][j] == -1 {
-				prev[i][j] = math.MaxInt
-			} else {
-				prev[i][j] = prevMat[i][j]
-			}
-		}
-	}
-
-	return MatrixToFile(filePath, prev, IntMatrixToCsv)
+func SavePrevToFile(prev [][]int, filePath string) error {
+	return MatrixToFile(filePath, prev, func(w *csv.Writer, mat [][]int) error {
+		return IntMatrixToCsv(w, mat, -1)
+	})
 }
 
 func InputFromFile(filePath string) ([][]float64, error) {
