@@ -11,17 +11,18 @@ import (
 func main() {
 	cfg := parseConfig()
 
-	var dist [][]float64
-	var prev [][]int
+	dist := floyd.InitDist(cfg.data)
+	prev := floyd.InitPrev(cfg.data)
+
 	switch cfg.algorithm {
 	case Sequential:
-		dist, prev = floyd.SequentialSPWithPath(cfg.data)
+		floyd.SequentialSPWithPath(dist, prev)
 	case ParallelRowed:
-		dist, prev = floyd.ParallelRowedSPWithPath(cfg.data, cfg.routineCount)
+		floyd.ParallelRowedSPWithPath(dist, prev, cfg.routineCount)
 	case ParallelBlocked:
-		dist, prev = floyd.ParallelBlockedSPWithPath(cfg.data, cfg.routineCount)
+		floyd.ParallelBlockedSPWithPath(dist, prev, cfg.routineCount)
 	case ParallelPhaseBlocked:
-		dist, prev = floyd.ParallelPhaseBlockedSPWithPath(cfg.data, cfg.routineCount)
+		floyd.ParallelPhaseBlockedSPWithPath(dist, prev, cfg.routineCount)
 	default:
 		log.Fatalln("Unknown algorithm type! Use --help to list available algorithms")
 	}

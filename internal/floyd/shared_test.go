@@ -1,8 +1,12 @@
 package floyd
 
 import (
+	"cmp"
+	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
+	"slices"
 	"strings"
 	"testing"
 
@@ -14,7 +18,7 @@ const TEST_DIST_DIR = "testdata/dist"
 
 // const TEST_PREV_DIR = "testdata/prev"
 
-func fileTestFloyd(t *testing.T, floyd func([][]float64) [][]float64) {
+func fileTestFloyd(t *testing.T, floyd func([][]float64)) {
 	testInputs, err := os.ReadDir(TEST_INPUT_DIR)
 	if err != nil {
 		t.Fatalf("Unable to read test inputs directory: %v", err)
@@ -41,14 +45,15 @@ func fileTestFloyd(t *testing.T, floyd func([][]float64) [][]float64) {
 				t.Fatalf("Unable to read test output file (dist): %v", err)
 			}
 
-			actualDist := floyd(inputMat)
+			dist := InitDist(inputMat)
+			floyd(dist)
 
-			utils.AssertMatricesEqual(t, actualDist, expectedDist, INF)
+			utils.AssertMatricesEqual(t, dist, expectedDist, INF)
 		})
 	}
 }
 
-func fileTestFloydWithPath(t *testing.T, floyd func([][]float64) ([][]float64, [][]int)) {
+func fileTestFloydWithPath(t *testing.T, floyd func([][]float64, [][]int)) {
 	testInputs, err := os.ReadDir(TEST_INPUT_DIR)
 	if err != nil {
 		t.Fatalf("Unable to read test inputs directory: %v", err)
@@ -81,11 +86,131 @@ func fileTestFloydWithPath(t *testing.T, floyd func([][]float64) ([][]float64, [
 			// 	t.Fatalf("Unable to read test output file (prev): %v", err)
 			// }
 
-			actualDist, actualPrev := floyd(inputMat)
+			dist := InitDist(inputMat)
+			prev := InitPrev(inputMat)
+			floyd(dist, prev)
 
-			utils.AssertMatricesEqual(t, actualDist, expectedDist, INF)
-			// utils.AssertMatricesEqual(t, actualPrev, expectedPrev, math.MaxInt)
-			utils.AssertFloydDistMatchesPrev(t, inputMat, actualDist, actualPrev)
+			utils.AssertMatricesEqual(t, dist, expectedDist, INF)
+			// utils.AssertMatricesEqual(t, prev, expectedPrev, math.MaxInt)
+			utils.AssertFloydDistMatchesPrev(t, inputMat, dist, prev)
+		})
+	}
+}
+
+func fileBenchmarkFloyd(b *testing.B, floyd func([][]float64)) {
+	testInputs, err := os.ReadDir(TEST_INPUT_DIR)
+	if err != nil {
+		b.Fatalf("Unable to read test inputs directory: %v", err)
+	}
+
+	slices.SortFunc(testInputs, func(a, b os.DirEntry) int {
+		var vA, vB int
+		fmt.Sscanf(a.Name(), "testcase_%dv", &vA)
+		fmt.Sscanf(b.Name(), "testcase_%dv", &vB)
+		return cmp.Compare(vA, vB)
+	})
+
+	for _, file := range testInputs {
+		if file.IsDir() || !strings.HasSuffix(file.Name(), ".input.txt") {
+			continue
+		}
+
+		var vertexCount int
+		_, err := fmt.Sscanf(file.Name(), "testcase_%dv.input.txt", &vertexCount)
+		if err != nil {
+			b.Fatal(err)
+		}
+
+		benchName := fmt.Sprintf("V=%d", vertexCount)
+
+		b.Run(benchName, func(b *testing.B) {
+			inputPath := filepath.Join(TEST_INPUT_DIR, file.Name())
+
+			inputMat, err := utils.InputFromFile(inputPath)
+			if err != nil {
+				b.Fatalf("Unable to read test input file: %v", err)
+			}
+
+			b.ResetTimer()
+			for range b.N {
+				b.StopTimer()
+
+				runtime.GC()
+				dist := InitDist(inputMat)
+
+				b.StartTimer()
+				floyd(dist)
+			}
+		})
+	}
+}
+
+func benchmarkParallelFloydGoroutines(b *testing.B, parallelFloyd func([][]float64, int), v int) {
+	goroutineCounts := []int{2, 4, 9, 12, 24, 48, 144, 1000, 5000}
+
+	fileName := fmt.Sprintf("testcase_%dv.input.txt", v)
+	inputPath := filepath.Join(TEST_INPUT_DIR, fileName)
+
+	inputMat, err := utils.InputFromFile(inputPath)
+	if err != nil {
+		b.Fatalf("Unable to read test input file: %v", err)
+	}
+
+	originalMaxProcs := runtime.GOMAXPROCS(0)
+	defer runtime.GOMAXPROCS(originalMaxProcs)
+
+	numCpu := runtime.GOMAXPROCS(runtime.NumCPU())
+
+	for i := range goroutineCounts {
+		routines := goroutineCounts[i]
+		benchName := fmt.Sprintf("V=%d_GR=%d_MaxProcs=%d", v, routines, numCpu)
+
+		b.Run(benchName, func(b *testing.B) {
+			b.ResetTimer()
+			for range b.N {
+				b.StopTimer()
+
+				runtime.GC()
+				dist := InitDist(inputMat)
+
+				b.StartTimer()
+				parallelFloyd(dist, routines)
+			}
+		})
+	}
+}
+
+func benchmarkParallelFloydProcs(b *testing.B, parallelFloyd func([][]float64, int), v int) {
+	const routineCount = 48
+	goMaxProcs := []int{1, 2, 4, 8, 12, 16, 24, 32}
+
+	fileName := fmt.Sprintf("testcase_%dv.input.txt", v)
+	inputPath := filepath.Join(TEST_INPUT_DIR, fileName)
+
+	inputMat, err := utils.InputFromFile(inputPath)
+	if err != nil {
+		b.Fatalf("Unable to read test input file: %v", err)
+	}
+
+	for i := range goMaxProcs {
+		maxProcs := goMaxProcs[i]
+		benchName := fmt.Sprintf("V=%d_GR=%d_MaxProcs=%d", v, routineCount, maxProcs)
+
+		b.Run(benchName, func(b *testing.B) {
+			originalMaxProcs := runtime.GOMAXPROCS(0)
+			defer runtime.GOMAXPROCS(originalMaxProcs)
+
+			runtime.GOMAXPROCS(maxProcs)
+			b.ResetTimer()
+			for range b.N {
+				b.StopTimer()
+
+				runtime.GC()
+				dist := InitDist(inputMat)
+
+				b.StartTimer()
+				parallelFloyd(dist, routineCount)
+			}
 		})
 	}
 }

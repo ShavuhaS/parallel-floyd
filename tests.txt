@@ -1,0 +1,210 @@
+=== RUN   TestParallelBlockedSP
+=== RUN   TestParallelBlockedSP/testcase_1000v
+=== RUN   TestParallelBlockedSP/testcase_100v
+=== RUN   TestParallelBlockedSP/testcase_10v
+=== RUN   TestParallelBlockedSP/testcase_2000v
+=== RUN   TestParallelBlockedSP/testcase_20v
+=== RUN   TestParallelBlockedSP/testcase_3v
+=== RUN   TestParallelBlockedSP/testcase_5000v
+=== RUN   TestParallelBlockedSP/testcase_500v
+=== RUN   TestParallelBlockedSP/testcase_50v
+=== RUN   TestParallelBlockedSP/testcase_5v
+=== RUN   TestParallelBlockedSP/testcase_7500v
+=== RUN   TestParallelBlockedSP/testcase_7v
+--- PASS: TestParallelBlockedSP (208.53s)
+    --- PASS: TestParallelBlockedSP/testcase_1000v (0.43s)
+    --- PASS: TestParallelBlockedSP/testcase_100v (0.00s)
+    --- PASS: TestParallelBlockedSP/testcase_10v (0.00s)
+    --- PASS: TestParallelBlockedSP/testcase_2000v (3.32s)
+    --- PASS: TestParallelBlockedSP/testcase_20v (0.00s)
+    --- PASS: TestParallelBlockedSP/testcase_3v (0.00s)
+    --- PASS: TestParallelBlockedSP/testcase_5000v (47.60s)
+    --- PASS: TestParallelBlockedSP/testcase_500v (0.07s)
+    --- PASS: TestParallelBlockedSP/testcase_50v (0.00s)
+    --- PASS: TestParallelBlockedSP/testcase_5v (0.00s)
+    --- PASS: TestParallelBlockedSP/testcase_7500v (157.09s)
+    --- PASS: TestParallelBlockedSP/testcase_7v (0.00s)
+=== RUN   TestParallelBlockedSPWithPath
+=== RUN   TestParallelBlockedSPWithPath/testcase_1000v
+=== RUN   TestParallelBlockedSPWithPath/testcase_100v
+=== RUN   TestParallelBlockedSPWithPath/testcase_10v
+=== RUN   TestParallelBlockedSPWithPath/testcase_2000v
+=== RUN   TestParallelBlockedSPWithPath/testcase_20v
+=== RUN   TestParallelBlockedSPWithPath/testcase_3v
+=== RUN   TestParallelBlockedSPWithPath/testcase_5000v
+=== RUN   TestParallelBlockedSPWithPath/testcase_500v
+=== RUN   TestParallelBlockedSPWithPath/testcase_50v
+=== RUN   TestParallelBlockedSPWithPath/testcase_5v
+=== RUN   TestParallelBlockedSPWithPath/testcase_7500v
+=== RUN   TestParallelBlockedSPWithPath/testcase_7v
+--- PASS: TestParallelBlockedSPWithPath (253.97s)
+    --- PASS: TestParallelBlockedSPWithPath/testcase_1000v (0.61s)
+    --- PASS: TestParallelBlockedSPWithPath/testcase_100v (0.00s)
+    --- PASS: TestParallelBlockedSPWithPath/testcase_10v (0.00s)
+    --- PASS: TestParallelBlockedSPWithPath/testcase_2000v (4.41s)
+    --- PASS: TestParallelBlockedSPWithPath/testcase_20v (0.00s)
+    --- PASS: TestParallelBlockedSPWithPath/testcase_3v (0.00s)
+    --- PASS: TestParallelBlockedSPWithPath/testcase_5000v (58.77s)
+    --- PASS: TestParallelBlockedSPWithPath/testcase_500v (0.09s)
+    --- PASS: TestParallelBlockedSPWithPath/testcase_50v (0.00s)
+    --- PASS: TestParallelBlockedSPWithPath/testcase_5v (0.00s)
+    --- PASS: TestParallelBlockedSPWithPath/testcase_7500v (190.08s)
+    --- PASS: TestParallelBlockedSPWithPath/testcase_7v (0.00s)
+=== RUN   TestParallelPhaseBlockedSP
+=== RUN   TestParallelPhaseBlockedSP/testcase_1000v
+=== RUN   TestParallelPhaseBlockedSP/testcase_100v
+=== RUN   TestParallelPhaseBlockedSP/testcase_10v
+=== RUN   TestParallelPhaseBlockedSP/testcase_2000v
+=== RUN   TestParallelPhaseBlockedSP/testcase_20v
+=== RUN   TestParallelPhaseBlockedSP/testcase_3v
+=== RUN   TestParallelPhaseBlockedSP/testcase_5000v
+=== RUN   TestParallelPhaseBlockedSP/testcase_500v
+=== RUN   TestParallelPhaseBlockedSP/testcase_50v
+=== RUN   TestParallelPhaseBlockedSP/testcase_5v
+=== RUN   TestParallelPhaseBlockedSP/testcase_7500v
+=== RUN   TestParallelPhaseBlockedSP/testcase_7v
+--- PASS: TestParallelPhaseBlockedSP (316.76s)
+    --- PASS: TestParallelPhaseBlockedSP/testcase_1000v (0.62s)
+    --- PASS: TestParallelPhaseBlockedSP/testcase_100v (0.00s)
+    --- PASS: TestParallelPhaseBlockedSP/testcase_10v (0.00s)
+    --- PASS: TestParallelPhaseBlockedSP/testcase_2000v (4.76s)
+    --- PASS: TestParallelPhaseBlockedSP/testcase_20v (0.00s)
+    --- PASS: TestParallelPhaseBlockedSP/testcase_3v (0.00s)
+    --- PASS: TestParallelPhaseBlockedSP/testcase_5000v (72.38s)
+    --- PASS: TestParallelPhaseBlockedSP/testcase_500v (0.09s)
+    --- PASS: TestParallelPhaseBlockedSP/testcase_50v (0.00s)
+    --- PASS: TestParallelPhaseBlockedSP/testcase_5v (0.00s)
+    --- PASS: TestParallelPhaseBlockedSP/testcase_7500v (238.91s)
+    --- PASS: TestParallelPhaseBlockedSP/testcase_7v (0.00s)
+=== RUN   TestParallelPhaseBlockedSPWithPath
+=== RUN   TestParallelPhaseBlockedSPWithPath/testcase_1000v
+=== RUN   TestParallelPhaseBlockedSPWithPath/testcase_100v
+=== RUN   TestParallelPhaseBlockedSPWithPath/testcase_10v
+=== RUN   TestParallelPhaseBlockedSPWithPath/testcase_2000v
+=== RUN   TestParallelPhaseBlockedSPWithPath/testcase_20v
+=== RUN   TestParallelPhaseBlockedSPWithPath/testcase_3v
+=== RUN   TestParallelPhaseBlockedSPWithPath/testcase_5000v
+=== RUN   TestParallelPhaseBlockedSPWithPath/testcase_500v
+=== RUN   TestParallelPhaseBlockedSPWithPath/testcase_50v
+=== RUN   TestParallelPhaseBlockedSPWithPath/testcase_5v
+=== RUN   TestParallelPhaseBlockedSPWithPath/testcase_7500v
+=== RUN   TestParallelPhaseBlockedSPWithPath/testcase_7v
+--- PASS: TestParallelPhaseBlockedSPWithPath (339.48s)
+    --- PASS: TestParallelPhaseBlockedSPWithPath/testcase_1000v (0.69s)
+    --- PASS: TestParallelPhaseBlockedSPWithPath/testcase_100v (0.00s)
+    --- PASS: TestParallelPhaseBlockedSPWithPath/testcase_10v (0.00s)
+    --- PASS: TestParallelPhaseBlockedSPWithPath/testcase_2000v (5.34s)
+    --- PASS: TestParallelPhaseBlockedSPWithPath/testcase_20v (0.00s)
+    --- PASS: TestParallelPhaseBlockedSPWithPath/testcase_3v (0.00s)
+    --- PASS: TestParallelPhaseBlockedSPWithPath/testcase_5000v (80.15s)
+    --- PASS: TestParallelPhaseBlockedSPWithPath/testcase_500v (0.11s)
+    --- PASS: TestParallelPhaseBlockedSPWithPath/testcase_50v (0.00s)
+    --- PASS: TestParallelPhaseBlockedSPWithPath/testcase_5v (0.00s)
+    --- PASS: TestParallelPhaseBlockedSPWithPath/testcase_7500v (253.19s)
+    --- PASS: TestParallelPhaseBlockedSPWithPath/testcase_7v (0.00s)
+=== RUN   TestParallelRowedSP
+=== RUN   TestParallelRowedSP/testcase_1000v
+=== RUN   TestParallelRowedSP/testcase_100v
+=== RUN   TestParallelRowedSP/testcase_10v
+=== RUN   TestParallelRowedSP/testcase_2000v
+=== RUN   TestParallelRowedSP/testcase_20v
+=== RUN   TestParallelRowedSP/testcase_3v
+=== RUN   TestParallelRowedSP/testcase_5000v
+=== RUN   TestParallelRowedSP/testcase_500v
+=== RUN   TestParallelRowedSP/testcase_50v
+=== RUN   TestParallelRowedSP/testcase_5v
+=== RUN   TestParallelRowedSP/testcase_7500v
+=== RUN   TestParallelRowedSP/testcase_7v
+--- PASS: TestParallelRowedSP (182.50s)
+    --- PASS: TestParallelRowedSP/testcase_1000v (0.40s)
+    --- PASS: TestParallelRowedSP/testcase_100v (0.00s)
+    --- PASS: TestParallelRowedSP/testcase_10v (0.00s)
+    --- PASS: TestParallelRowedSP/testcase_2000v (3.05s)
+    --- PASS: TestParallelRowedSP/testcase_20v (0.00s)
+    --- PASS: TestParallelRowedSP/testcase_3v (0.00s)
+    --- PASS: TestParallelRowedSP/testcase_5000v (42.16s)
+    --- PASS: TestParallelRowedSP/testcase_500v (0.08s)
+    --- PASS: TestParallelRowedSP/testcase_50v (0.00s)
+    --- PASS: TestParallelRowedSP/testcase_5v (0.00s)
+    --- PASS: TestParallelRowedSP/testcase_7500v (136.80s)
+    --- PASS: TestParallelRowedSP/testcase_7v (0.00s)
+=== RUN   TestParallelRowedSPWithPath
+=== RUN   TestParallelRowedSPWithPath/testcase_1000v
+=== RUN   TestParallelRowedSPWithPath/testcase_100v
+=== RUN   TestParallelRowedSPWithPath/testcase_10v
+=== RUN   TestParallelRowedSPWithPath/testcase_2000v
+=== RUN   TestParallelRowedSPWithPath/testcase_20v
+=== RUN   TestParallelRowedSPWithPath/testcase_3v
+=== RUN   TestParallelRowedSPWithPath/testcase_5000v
+=== RUN   TestParallelRowedSPWithPath/testcase_500v
+=== RUN   TestParallelRowedSPWithPath/testcase_50v
+=== RUN   TestParallelRowedSPWithPath/testcase_5v
+=== RUN   TestParallelRowedSPWithPath/testcase_7500v
+=== RUN   TestParallelRowedSPWithPath/testcase_7v
+--- PASS: TestParallelRowedSPWithPath (209.23s)
+    --- PASS: TestParallelRowedSPWithPath/testcase_1000v (0.53s)
+    --- PASS: TestParallelRowedSPWithPath/testcase_100v (0.00s)
+    --- PASS: TestParallelRowedSPWithPath/testcase_10v (0.00s)
+    --- PASS: TestParallelRowedSPWithPath/testcase_2000v (4.81s)
+    --- PASS: TestParallelRowedSPWithPath/testcase_20v (0.00s)
+    --- PASS: TestParallelRowedSPWithPath/testcase_3v (0.00s)
+    --- PASS: TestParallelRowedSPWithPath/testcase_5000v (48.72s)
+    --- PASS: TestParallelRowedSPWithPath/testcase_500v (0.09s)
+    --- PASS: TestParallelRowedSPWithPath/testcase_50v (0.00s)
+    --- PASS: TestParallelRowedSPWithPath/testcase_5v (0.00s)
+    --- PASS: TestParallelRowedSPWithPath/testcase_7500v (155.09s)
+    --- PASS: TestParallelRowedSPWithPath/testcase_7v (0.00s)
+=== RUN   TestSequentialSP
+=== RUN   TestSequentialSP/testcase_1000v
+=== RUN   TestSequentialSP/testcase_100v
+=== RUN   TestSequentialSP/testcase_10v
+=== RUN   TestSequentialSP/testcase_2000v
+=== RUN   TestSequentialSP/testcase_20v
+=== RUN   TestSequentialSP/testcase_3v
+=== RUN   TestSequentialSP/testcase_5000v
+=== RUN   TestSequentialSP/testcase_500v
+=== RUN   TestSequentialSP/testcase_50v
+=== RUN   TestSequentialSP/testcase_5v
+=== RUN   TestSequentialSP/testcase_7500v
+=== RUN   TestSequentialSP/testcase_7v
+--- PASS: TestSequentialSP (700.19s)
+    --- PASS: TestSequentialSP/testcase_1000v (1.33s)
+    --- PASS: TestSequentialSP/testcase_100v (0.00s)
+    --- PASS: TestSequentialSP/testcase_10v (0.00s)
+    --- PASS: TestSequentialSP/testcase_2000v (10.37s)
+    --- PASS: TestSequentialSP/testcase_20v (0.00s)
+    --- PASS: TestSequentialSP/testcase_3v (0.00s)
+    --- PASS: TestSequentialSP/testcase_5000v (160.16s)
+    --- PASS: TestSequentialSP/testcase_500v (0.18s)
+    --- PASS: TestSequentialSP/testcase_50v (0.00s)
+    --- PASS: TestSequentialSP/testcase_5v (0.00s)
+    --- PASS: TestSequentialSP/testcase_7500v (528.15s)
+    --- PASS: TestSequentialSP/testcase_7v (0.00s)
+=== RUN   TestSequentialSPWithPath
+=== RUN   TestSequentialSPWithPath/testcase_1000v
+=== RUN   TestSequentialSPWithPath/testcase_100v
+=== RUN   TestSequentialSPWithPath/testcase_10v
+=== RUN   TestSequentialSPWithPath/testcase_2000v
+=== RUN   TestSequentialSPWithPath/testcase_20v
+=== RUN   TestSequentialSPWithPath/testcase_3v
+=== RUN   TestSequentialSPWithPath/testcase_5000v
+=== RUN   TestSequentialSPWithPath/testcase_500v
+=== RUN   TestSequentialSPWithPath/testcase_50v
+=== RUN   TestSequentialSPWithPath/testcase_5v
+=== RUN   TestSequentialSPWithPath/testcase_7500v
+=== RUN   TestSequentialSPWithPath/testcase_7v
+--- PASS: TestSequentialSPWithPath (833.02s)
+    --- PASS: TestSequentialSPWithPath/testcase_1000v (1.67s)
+    --- PASS: TestSequentialSPWithPath/testcase_100v (0.00s)
+    --- PASS: TestSequentialSPWithPath/testcase_10v (0.00s)
+    --- PASS: TestSequentialSPWithPath/testcase_2000v (13.02s)
+    --- PASS: TestSequentialSPWithPath/testcase_20v (0.00s)
+    --- PASS: TestSequentialSPWithPath/testcase_3v (0.00s)
+    --- PASS: TestSequentialSPWithPath/testcase_5000v (191.09s)
+    --- PASS: TestSequentialSPWithPath/testcase_500v (0.22s)
+    --- PASS: TestSequentialSPWithPath/testcase_50v (0.00s)
+    --- PASS: TestSequentialSPWithPath/testcase_5v (0.00s)
+    --- PASS: TestSequentialSPWithPath/testcase_7500v (627.02s)
+    --- PASS: TestSequentialSPWithPath/testcase_7v (0.00s)
+PASS
+ok  	github.com/ShavuhaS/parallel-floyd/internal/floyd	3043.800s

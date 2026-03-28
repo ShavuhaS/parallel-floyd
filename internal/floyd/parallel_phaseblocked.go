@@ -54,8 +54,7 @@ func orchestrateFloydBlocks(blocksPerDim int, processBlock func(blockI, blockJ, 
 	}
 }
 
-func ParallelPhaseBlockedSP(adjMat [][]float64, numOfRoutines int) [][]float64 {
-	dist := InitDist(adjMat)
+func ParallelPhaseBlockedSP(dist [][]float64, numOfRoutines int) {
 	blocksPerDim := int(math.Sqrt(float64(numOfRoutines)))
 
 	processBlock := func(blockI, blockJ, blockK int) {
@@ -63,11 +62,9 @@ func ParallelPhaseBlockedSP(adjMat [][]float64, numOfRoutines int) [][]float64 {
 	}
 
 	orchestrateFloydBlocks(blocksPerDim, processBlock)
-	return dist
 }
 
-func ParallelPhaseBlockedSPWithPath(adjMat [][]float64, numOfRoutines int) ([][]float64, [][]int) {
-	dist, prev := InitDistAndPrev(adjMat)
+func ParallelPhaseBlockedSPWithPath(dist [][]float64, prev [][]int, numOfRoutines int) {
 	blocksPerDim := int(math.Sqrt(float64(numOfRoutines)))
 
 	processBlock := func(blockI, blockJ, blockK int) {
@@ -75,7 +72,6 @@ func ParallelPhaseBlockedSPWithPath(adjMat [][]float64, numOfRoutines int) ([][]
 	}
 
 	orchestrateFloydBlocks(blocksPerDim, processBlock)
-	return dist, prev
 }
 
 func floydProcessBlockOnlyDist(dist [][]float64, blocksPerDim, blockI, blockJ, blockK int) {
@@ -84,18 +80,7 @@ func floydProcessBlockOnlyDist(dist [][]float64, blocksPerDim, blockI, blockJ, b
 	startJ, endJ := n*blockJ/blocksPerDim, n*(blockJ+1)/blocksPerDim
 	startK, endK := n*blockK/blocksPerDim, n*(blockK+1)/blocksPerDim
 
-	for k := startK; k < endK; k++ {
-		for i := startI; i < endI; i++ {
-			for j := startJ; j < endJ; j++ {
-				if dist[i][k] != INF && dist[k][j] != INF {
-					newPath := dist[i][k] + dist[k][j]
-					if newPath < dist[i][j] {
-						dist[i][j] = newPath
-					}
-				}
-			}
-		}
-	}
+	floydProcessK(dist, startI, endI, startJ, endJ, startK, endK)
 }
 
 func floydProcessBlockWithPath(dist [][]float64, prev [][]int, blocksPerDim, blockI, blockJ, blockK int) {
@@ -104,17 +89,5 @@ func floydProcessBlockWithPath(dist [][]float64, prev [][]int, blocksPerDim, blo
 	startJ, endJ := n*blockJ/blocksPerDim, n*(blockJ+1)/blocksPerDim
 	startK, endK := n*blockK/blocksPerDim, n*(blockK+1)/blocksPerDim
 
-	for k := startK; k < endK; k++ {
-		for i := startI; i < endI; i++ {
-			for j := startJ; j < endJ; j++ {
-				if dist[i][k] != INF && dist[k][j] != INF {
-					newPath := dist[i][k] + dist[k][j]
-					if newPath < dist[i][j] {
-						dist[i][j] = newPath
-						prev[i][j] = prev[k][j]
-					}
-				}
-			}
-		}
-	}
+	floydWithPathProcessK(dist, prev, startI, endI, startJ, endJ, startK, endK)
 }
