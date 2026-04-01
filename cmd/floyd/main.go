@@ -27,7 +27,7 @@ func main() {
 		log.Fatalln("Unknown algorithm type! Use --help to list available algorithms")
 	}
 
-	if cfg.outputDistFile == nil || cfg.outputPrevFile == nil {
+	if cfg.printOutput {
 		fmt.Println("Results:")
 		fmt.Println()
 		for u := 0; u < len(cfg.data); u++ {

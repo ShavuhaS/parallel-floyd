@@ -28,6 +28,7 @@ type FloydConfig struct {
 	inputFile      *string
 	outputDistFile *string
 	outputPrevFile *string
+	printOutput    bool
 	routineCount   int
 	maxProcs       int
 }
@@ -54,6 +55,7 @@ func parseConfig() *FloydConfig {
 	saveInput := flag.Bool("save-input", false, "Whether to save the input to a file.")
 	output := flag.String("output", "none", "File name prefix (or dir) to which to save the output (dist and prev matrices)")
 	saveOutput := flag.Bool("save-output", false, "Whether to save the output to a file.")
+	printOutput := flag.Bool("print-output", true, "Whether to print the output to stdout.")
 
 	vertexCount := flag.Int("v", -1, "The number of vertices in a generated graph.")
 	edgeProb := flag.Float64("edge-probability", 1.0, "Probability of an edge generation.")
@@ -73,6 +75,7 @@ func parseConfig() *FloydConfig {
 		fmt.Fprintf(os.Stderr, "\t-save-input\n\t\tWhether to save the input to a file. (default false)\n")
 		fmt.Fprintf(os.Stderr, "\t-output string\n\t\tFile name prefix (or dir) to which to save the output (dist and prev matrices). (default \"none\")\n")
 		fmt.Fprintf(os.Stderr, "\t-save-output\n\t\tWhether to save the output to a file. (default false)\n\n")
+		fmt.Fprintf(os.Stderr, "\t-print-output\n\t\tWhether to print the output to stdout. (default true)\n\n")
 
 		fmt.Fprintf(os.Stderr, "Matrix generation options:\n")
 		fmt.Fprintf(os.Stderr, "\t-v int\n\t\tThe number of vertices in a generated graph (if vertexCount is specified). (default -1)\n")
@@ -200,6 +203,7 @@ func parseConfig() *FloydConfig {
 		cfg.outputPrevFile = &outputPrevFile
 	}
 
+	cfg.printOutput = *printOutput
 	cfg.routineCount = *routineCount
 	cfg.maxProcs = *maxProcs
 
