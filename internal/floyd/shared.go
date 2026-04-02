@@ -5,6 +5,8 @@ import (
 	"slices"
 )
 
+const INF = math.MaxFloat64
+
 func InitDist(adjMat [][]float64) [][]float64 {
 	n := len(adjMat)
 	dist := make([][]float64, n)
@@ -29,8 +31,6 @@ func InitPrev(adjMat [][]float64) [][]int {
 	}
 	return prev
 }
-
-const INF = math.MaxFloat64
 
 func floydProcessK(dist [][]float64, startI, endI, startJ, endJ, startK, endK int) {
 	for k := startK; k < endK; k++ {
