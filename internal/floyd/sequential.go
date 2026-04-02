@@ -1,11 +1,5 @@
 package floyd
 
-import (
-	"math"
-)
-
-const INF = math.MaxFloat64
-
 func SequentialSP(adjMat [][]float64) {
 	n := len(adjMat)
 	floydProcessK(adjMat, 0, n, 0, n, 0, n)

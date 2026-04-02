@@ -7,13 +7,13 @@ import (
 
 func TestParallelRowedSP(t *testing.T) {
 	fileTestFloyd(t, func(adjMat [][]float64) {
-		ParallelRowedSP(adjMat, runtime.NumCPU())
+		ParallelRowedSP(adjMat, runtime.NumCPU()*runtime.NumCPU())
 	})
 }
 
 func TestParallelRowedSPWithPath(t *testing.T) {
 	fileTestFloydWithPath(t, func(adjMat [][]float64, prev [][]int) {
-		ParallelRowedSPWithPath(adjMat, prev, runtime.NumCPU())
+		ParallelRowedSPWithPath(adjMat, prev, runtime.NumCPU()*runtime.NumCPU())
 	})
 }
 

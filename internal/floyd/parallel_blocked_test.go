@@ -7,13 +7,13 @@ import (
 
 func TestParallelBlockedSP(t *testing.T) {
 	fileTestFloyd(t, func(adjMat [][]float64) {
-		ParallelBlockedSP(adjMat, runtime.NumCPU())
+		ParallelBlockedSP(adjMat, runtime.NumCPU()*runtime.NumCPU())
 	})
 }
 
 func TestParallelBlockedSPWithPath(t *testing.T) {
 	fileTestFloydWithPath(t, func(adjMat [][]float64, prev [][]int) {
-		ParallelBlockedSPWithPath(adjMat, prev, runtime.NumCPU())
+		ParallelBlockedSPWithPath(adjMat, prev, runtime.NumCPU()*runtime.NumCPU())
 	})
 }
 
