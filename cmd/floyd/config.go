@@ -86,7 +86,7 @@ func parseConfig() *FloydConfig {
 
 	flag.Parse()
 
-	log.Default().SetFlags(log.Lshortfile)
+	log.Default().SetFlags(0)
 
 	var cfg FloydConfig
 

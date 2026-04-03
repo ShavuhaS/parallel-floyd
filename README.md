@@ -26,6 +26,9 @@
 	-save-output
 		Whether to save the output to a file. (default false)
 
+	-print-output
+		Whether to print the output to stdout. (default true)
+
 ### Matrix generation options:
 	-v int
 		The number of vertices in a generated graph (if vertexCount is specified). (default -1)
