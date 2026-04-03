@@ -64,6 +64,15 @@ func ParallelPhaseBlockedSP(dist [][]float64, numOfRoutines int) {
 	orchestrateFloydBlocks(blocksPerDim, processBlock)
 }
 
+func floydProcessBlockOnlyDist(dist [][]float64, blocksPerDim, blockI, blockJ, blockK int) {
+	n := len(dist)
+	startI, endI := n*blockI/blocksPerDim, n*(blockI+1)/blocksPerDim
+	startJ, endJ := n*blockJ/blocksPerDim, n*(blockJ+1)/blocksPerDim
+	startK, endK := n*blockK/blocksPerDim, n*(blockK+1)/blocksPerDim
+
+	floydProcessK(dist, startI, endI, startJ, endJ, startK, endK)
+}
+
 func ParallelPhaseBlockedSPWithPath(dist [][]float64, prev [][]int, numOfRoutines int) {
 	blocksPerDim := int(math.Sqrt(float64(numOfRoutines)))
 
@@ -72,15 +81,6 @@ func ParallelPhaseBlockedSPWithPath(dist [][]float64, prev [][]int, numOfRoutine
 	}
 
 	orchestrateFloydBlocks(blocksPerDim, processBlock)
-}
-
-func floydProcessBlockOnlyDist(dist [][]float64, blocksPerDim, blockI, blockJ, blockK int) {
-	n := len(dist)
-	startI, endI := n*blockI/blocksPerDim, n*(blockI+1)/blocksPerDim
-	startJ, endJ := n*blockJ/blocksPerDim, n*(blockJ+1)/blocksPerDim
-	startK, endK := n*blockK/blocksPerDim, n*(blockK+1)/blocksPerDim
-
-	floydProcessK(dist, startI, endI, startJ, endJ, startK, endK)
 }
 
 func floydProcessBlockWithPath(dist [][]float64, prev [][]int, blocksPerDim, blockI, blockJ, blockK int) {
