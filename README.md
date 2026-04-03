@@ -35,9 +35,9 @@ go build -o <dir> ./cmd/floyd
 ### I/O options:
 - **input** *string*
 	- File .txt or dir to which to write the input (with --save-input).
-	- File .txt from which to read the input (without --save-input). The first line contains a single number "n" 
-	- denoting the number of vertices. Then it's followed by csv lines of the resulting matrix.
-	- Absent edges should be denoted as "-".
+	- File .txt from which to read the input (without --save-input). The first line contains a single number "n" \
+	  denoting the number of vertices. Then it's followed by csv lines of the resulting matrix. \
+	  Absent edges should be denoted as "-".
 	- default: ```"none"```
 - **save-input**
 	- Whether to save the input to a file.
