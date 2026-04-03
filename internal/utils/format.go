@@ -32,14 +32,14 @@ func GetPathString[T comparable](adjMat [][]T, path []int, totalLength T) string
 	sb.WriteString(fmt.Sprintf("Path from %v to %v (Total: %v): [#%v]", path[0], path[l-1], totalLength, path[0]))
 	for i := 1; i < l; i++ {
 		u, v := path[i-1], path[i]
-		edgeWeightStr := NumberToSubscript(fmt.Sprint(adjMat[u][v]), 3)
+		edgeWeightStr := NumberToSubscript(fmt.Sprint(adjMat[u][v]))
 		sb.WriteString(fmt.Sprintf(" --%v--> [#%v]", edgeWeightStr, v))
 	}
 
 	return sb.String()
 }
 
-func NumberToSubscript(numStr string, precision int) string {
+func NumberToSubscript(numStr string) string {
 	replacer := strings.NewReplacer(
 		"0", "₀", "1", "₁", "2", "₂", "3", "₃", "4", "₄",
 		"5", "₅", "6", "₆", "7", "₇", "8", "₈", "9", "₉",
