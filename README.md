@@ -20,6 +20,7 @@ go build -o <dir> ./cmd/floyd
 ## Usage
 
 ### Algorithm specific options:
+
 	-algorithm string
 		Algorithm to use.
 		Available options: sequential, parallel-rowed, parallel-blocked, parallel-phaseblocked. (default "sequential")
