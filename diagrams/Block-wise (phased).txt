@@ -1,0 +1,60 @@
+title Parallel Floyd-Warshall (2D, phased)
+
+participant "Main" as main
+participant "ColKWorker<sub>j</sub>\n(0 ≤ j < B, j ≠ k)" as workerCol
+participant "RowKWorker<sub>i</sub>\n(0 ≤ i < B, i ≠ k)" as workerRow
+participant "BlockWorker<sub>ij</sub>\n(0 ≤ i < B, 0 ≤ j < B,\ni ≠ k, j ≠ k)" as workerBlock
+
+activate main
+loop k = {0, 1, ..., K - 1}
+
+group phase 1
+main->main:processBlockK(k, k, k)
+end
+
+group phase 2
+main->workerRow:<position:left>go processBlockK(wg, k, i, k)</position>
+activate workerRow
+
+main->workerCol:go processBlockK(wg, k, k, j)
+activate workerCol
+
+main->main: wg.Wait()
+deactivate main
+
+note right of main: BLOCKED
+
+main<--workerCol: wg.Done()
+deactivate workerCol
+space
+destroy workerCol
+
+main<--workerRow: wg.Done()
+deactivate workerRow
+space
+destroy workerRow
+
+activate main
+end
+
+group phase 3
+main->workerBlock: go processBlockK(wg, k, i, j)
+activate workerBlock
+main->main: wg.Wait()
+deactivate main
+
+note right of main: BLOCKED
+
+main<--workerBlock: wg.Done()
+deactivate workerBlock
+activate main
+space
+destroy workerBlock
+end
+
+end
+
+space
+deactivate main
+space
+destroy main

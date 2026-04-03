@@ -1,0 +1,24 @@
+title Parallel Floyd-Warshall (row-wise)
+
+participant "Main" as main
+participant "RowWorker<sub>i</sub>\n(0 ≤ i < I)" as worker
+
+activate main
+loop k = {0, 1, ..., V - 1}
+
+main->worker:go processRowBlock(wg, k, i)
+activate worker
+main->main: wg.Wait()
+deactivate main
+note over main: BLOCKED
+main<--worker:wg.Done()
+deactivate worker
+activate main
+
+end
+
+space
+destroy worker
+deactivate main
+space
+destroy main

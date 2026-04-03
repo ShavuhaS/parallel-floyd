@@ -1,0 +1,26 @@
+title Parallel Floyd-Warshall (2D decomposition)
+
+participant "Main" as main
+participant "BlockWorker<sub>ij</sub>\n(0 ≤ i < B, 0 ≤ j < B)" as worker
+
+participantspacing 8
+
+activate main
+loop k = {0, 1, ..., V - 1}
+
+main->worker:go processBlock(wg, k, i, j)
+activate worker
+main->main: wg.Wait()
+deactivate main
+note over main: BLOCKED
+main<--worker:wg.Done()
+deactivate worker
+activate main
+
+end
+
+space
+destroy worker
+deactivate main
+space
+destroy main
