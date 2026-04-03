@@ -6,9 +6,16 @@
 Go version: 1.26
 
 Using Make:
-```bash make build```
+
+```bash
+make build
+```
+
 Using Go compiler:
-```bash go build -o <dir> ./cmd/floyd``` 
+
+```bash
+go build -o <dir> ./cmd/floyd
+``` 
 
 ## Usage
 
