@@ -129,6 +129,7 @@ func parseConfig() *FloydConfig {
 			log.Fatalf("error: %v", err)
 		}
 		cfg.data = mat
+		input = nil
 	} else if *vertexCount != -1 {
 		if *vertexCount <= 0 {
 			log.Fatalf("error: Invalid vertex count")

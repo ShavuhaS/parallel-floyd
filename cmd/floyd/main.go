@@ -41,7 +41,6 @@ func main() {
 			}
 			fmt.Println()
 		}
-		fmt.Println()
 	}
 
 	if cfg.inputFile != nil {
