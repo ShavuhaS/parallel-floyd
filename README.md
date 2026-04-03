@@ -25,7 +25,6 @@
 		File name prefix (or dir) to which to save the output (dist and prev matrices). (default "none")
 	-save-output
 		Whether to save the output to a file. (default false)
-
 	-print-output
 		Whether to print the output to stdout. (default true)
 

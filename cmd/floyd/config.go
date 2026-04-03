@@ -74,7 +74,7 @@ func parseConfig() *FloydConfig {
 		fmt.Fprintf(os.Stderr, "\t-input string\n\t\tFile .txt or dir to which to write the input (with --save-input).\n\t\tFile .txt from which to read the input (without --save-input). The first line contains a single number \"n\" \n\t\tdenoting the number of vertices. Then it's followed by csv lines of the resulting matrix.\n\t\tAbsent edges should be denoted as \"-\". (default \"none\")\n")
 		fmt.Fprintf(os.Stderr, "\t-save-input\n\t\tWhether to save the input to a file. (default false)\n")
 		fmt.Fprintf(os.Stderr, "\t-output string\n\t\tFile name prefix (or dir) to which to save the output (dist and prev matrices). (default \"none\")\n")
-		fmt.Fprintf(os.Stderr, "\t-save-output\n\t\tWhether to save the output to a file. (default false)\n\n")
+		fmt.Fprintf(os.Stderr, "\t-save-output\n\t\tWhether to save the output to a file. (default false)\n")
 		fmt.Fprintf(os.Stderr, "\t-print-output\n\t\tWhether to print the output to stdout. (default true)\n\n")
 
 		fmt.Fprintf(os.Stderr, "Matrix generation options:\n")
