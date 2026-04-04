@@ -32,3 +32,15 @@ func BenchmarkParallelBlockedSPRoutines(b *testing.B) {
 func BenchmarkParallelBlockedSPProcs(b *testing.B) {
 	benchmarkParallelFloydProcs(b, ParallelBlockedSP, 5000)
 }
+
+func BenchmarkParallelBlockedSPBestConfig(b *testing.B) {
+	benchmarkParallelFloydConfig(b, ParallelBlockedSP, parallelBlockedRoutineMapping)
+}
+
+func parallelBlockedRoutineMapping(v int) int {
+	blocksPerDim := v / 600
+	blocksPerDim = max(blocksPerDim, 3)
+	blocksPerDim = min(blocksPerDim, 8, v)
+	numOfRoutines := blocksPerDim * blocksPerDim
+	return numOfRoutines
+}

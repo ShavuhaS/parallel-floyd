@@ -1,6 +1,7 @@
 package floyd
 
 import (
+	"math"
 	"runtime"
 	"testing"
 )
@@ -31,4 +32,16 @@ func BenchmarkParallelPhaseBlockedSPRoutines(b *testing.B) {
 
 func BenchmarkParallelPhaseBlockedSPProcs(b *testing.B) {
 	benchmarkParallelFloydProcs(b, ParallelPhaseBlockedSP, 5000)
+}
+
+func BenchmarkParallelPhaseBlockedSPBestConfig(b *testing.B) {
+	benchmarkParallelFloydConfig(b, ParallelPhaseBlockedSP, parallelPhaseBlockedRoutineMapping)
+}
+
+func parallelPhaseBlockedRoutineMapping(v int) int {
+	blocksPerDim := int(math.Ceil(float64(v) / 150.0))
+	blocksPerDim = max(blocksPerDim, 3)
+	blocksPerDim = min(blocksPerDim, v)
+	numOfRoutines := blocksPerDim * blocksPerDim
+	return numOfRoutines
 }

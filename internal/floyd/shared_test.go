@@ -205,3 +205,62 @@ func benchmarkParallelFloydProcs(b *testing.B, parallelFloyd func([][]float64, i
 		})
 	}
 }
+
+func benchmarkParallelFloydConfig(
+	b *testing.B,
+	parallelFloyd func([][]float64, int),
+	getRoutineCount func(v int) int,
+) {
+	testInputs, err := os.ReadDir(TEST_INPUT_DIR)
+	if err != nil {
+		b.Fatalf("Unable to read test inputs directory: %v", err)
+	}
+
+	slices.SortFunc(testInputs, func(a, b os.DirEntry) int {
+		var vA, vB int
+		fmt.Sscanf(a.Name(), "testcase_%dv", &vA)
+		fmt.Sscanf(b.Name(), "testcase_%dv", &vB)
+		return cmp.Compare(vA, vB)
+	})
+
+	originalMaxProcs := runtime.GOMAXPROCS(0)
+	defer runtime.GOMAXPROCS(originalMaxProcs)
+
+	runtime.GOMAXPROCS(runtime.NumCPU())
+
+	for _, file := range testInputs {
+		if file.IsDir() || !strings.HasSuffix(file.Name(), ".input.txt") {
+			continue
+		}
+
+		var vertexCount int
+		_, err := fmt.Sscanf(file.Name(), "testcase_%dv.input.txt", &vertexCount)
+		if err != nil {
+			b.Fatal(err)
+		}
+
+		routines := getRoutineCount(vertexCount)
+
+		benchName := fmt.Sprintf("V=%d_GR=%d", vertexCount, routines)
+
+		b.Run(benchName, func(b *testing.B) {
+			inputPath := filepath.Join(TEST_INPUT_DIR, file.Name())
+
+			inputMat, err := utils.InputFromFile(inputPath)
+			if err != nil {
+				b.Fatalf("Unable to read test input file: %v", err)
+			}
+
+			b.ResetTimer()
+			for range b.N {
+				b.StopTimer()
+
+				runtime.GC()
+				dist := InitDist(inputMat)
+
+				b.StartTimer()
+				parallelFloyd(dist, routines)
+			}
+		})
+	}
+}

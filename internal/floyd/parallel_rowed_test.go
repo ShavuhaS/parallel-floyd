@@ -32,3 +32,14 @@ func BenchmarkParallelRowedSPRoutines(b *testing.B) {
 func BenchmarkParallelRowedSPProcs(b *testing.B) {
 	benchmarkParallelFloydProcs(b, ParallelRowedSP, 5000)
 }
+
+func BenchmarkParallelRowedSPBestConfig(b *testing.B) {
+	benchmarkParallelFloydConfig(b, ParallelRowedSP, parallelRowedRoutineMapping)
+}
+
+func parallelRowedRoutineMapping(v int) int {
+	numOfRoutines := v / 35
+	numOfRoutines = max(numOfRoutines, runtime.NumCPU())
+	numOfRoutines = min(numOfRoutines, 144, v)
+	return numOfRoutines
+}
