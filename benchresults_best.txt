@@ -1,0 +1,42 @@
+goos: linux
+goarch: amd64
+pkg: github.com/ShavuhaS/parallel-floyd/internal/floyd
+cpu: 12th Gen Intel(R) Core(TM) i5-12450H
+BenchmarkParallelBlockedSPBestConfig/V=3_GR=9-12         	      20	     20890 ns/op
+BenchmarkParallelBlockedSPBestConfig/V=5_GR=9-12         	      20	     29682 ns/op
+BenchmarkParallelBlockedSPBestConfig/V=7_GR=9-12         	      20	     34461 ns/op
+BenchmarkParallelBlockedSPBestConfig/V=10_GR=9-12        	      20	     48006 ns/op
+BenchmarkParallelBlockedSPBestConfig/V=20_GR=9-12        	      20	    101571 ns/op
+BenchmarkParallelBlockedSPBestConfig/V=50_GR=9-12        	      20	    482079 ns/op
+BenchmarkParallelBlockedSPBestConfig/V=100_GR=9-12       	      20	   1871536 ns/op
+BenchmarkParallelBlockedSPBestConfig/V=500_GR=9-12       	      20	  50281188 ns/op
+BenchmarkParallelBlockedSPBestConfig/V=1000_GR=9-12      	      20	 343011573 ns/op
+BenchmarkParallelBlockedSPBestConfig/V=2000_GR=9-12      	      20	3036861615 ns/op
+BenchmarkParallelBlockedSPBestConfig/V=5000_GR=64-12     	      20	40734356609 ns/op
+BenchmarkParallelBlockedSPBestConfig/V=7500_GR=64-12     	      20	132843485056 ns/op
+BenchmarkParallelPhaseBlockedSPBestConfig/V=3_GR=9-12    	      20	     25593 ns/op
+BenchmarkParallelPhaseBlockedSPBestConfig/V=5_GR=9-12    	      20	     32033 ns/op
+BenchmarkParallelPhaseBlockedSPBestConfig/V=7_GR=9-12    	      20	     34440 ns/op
+BenchmarkParallelPhaseBlockedSPBestConfig/V=10_GR=9-12   	      20	     38705 ns/op
+BenchmarkParallelPhaseBlockedSPBestConfig/V=20_GR=9-12   	      20	     79679 ns/op
+BenchmarkParallelPhaseBlockedSPBestConfig/V=50_GR=9-12   	      20	    385644 ns/op
+BenchmarkParallelPhaseBlockedSPBestConfig/V=100_GR=9-12  	      20	   1625519 ns/op
+BenchmarkParallelPhaseBlockedSPBestConfig/V=500_GR=16-12 	      20	  61758776 ns/op
+BenchmarkParallelPhaseBlockedSPBestConfig/V=1000_GR=49-12         	      20	 345763350 ns/op
+BenchmarkParallelPhaseBlockedSPBestConfig/V=2000_GR=196-12        	      20	2546139320 ns/op
+BenchmarkParallelPhaseBlockedSPBestConfig/V=5000_GR=1156-12       	      20	37556716595 ns/op
+BenchmarkParallelPhaseBlockedSPBestConfig/V=7500_GR=2500-12       	      20	150901521855 ns/op
+BenchmarkParallelRowedSPBestConfig/V=3_GR=3-12                    	      20	     18102 ns/op
+BenchmarkParallelRowedSPBestConfig/V=5_GR=5-12                    	      20	     38304 ns/op
+BenchmarkParallelRowedSPBestConfig/V=7_GR=7-12                    	      20	     53329 ns/op
+BenchmarkParallelRowedSPBestConfig/V=10_GR=10-12                  	      20	     92198 ns/op
+BenchmarkParallelRowedSPBestConfig/V=20_GR=12-12                  	      20	    218740 ns/op
+BenchmarkParallelRowedSPBestConfig/V=50_GR=12-12                  	      20	    704133 ns/op
+BenchmarkParallelRowedSPBestConfig/V=100_GR=12-12                 	      20	   1917395 ns/op
+BenchmarkParallelRowedSPBestConfig/V=500_GR=14-12                 	      20	  48320134 ns/op
+BenchmarkParallelRowedSPBestConfig/V=1000_GR=28-12                	      20	 297801331 ns/op
+BenchmarkParallelRowedSPBestConfig/V=2000_GR=57-12                	      20	2482190531 ns/op
+BenchmarkParallelRowedSPBestConfig/V=5000_GR=142-12               	      20	35235588726 ns/op
+BenchmarkParallelRowedSPBestConfig/V=7500_GR=144-12               	      20	115782102697 ns/op
+PASS
+ok  	github.com/ShavuhaS/parallel-floyd/internal/floyd	10987.097s
